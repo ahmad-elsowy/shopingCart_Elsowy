@@ -69,14 +69,31 @@ drowData = function(){
 
 //catch all buttons "Add To Cart"
 let addToCartBtn = document.querySelectorAll(".home-content .boxes .box .actions button")
+let boxDom = document.querySelectorAll(".home-content .boxes .box")
+//hold the badge span
+let badge = document.querySelector(".header-section nav .user-in li .badge")
 
 
 addToCartBtn.forEach((btn)=>{
     btn.addEventListener('click',function(e){
         //check if user is login
         if(userName){
-            //catch id of button clicked
-           console.log(e.target.id)
+           //increase number at the top of cart icon 
+            badge.innerHTML  = (+badge.innerHTML + 1);
+            // set its value to local storage
+            localStorage.setItem("badgeNum" ,  badge.innerHTML)
+
+            //using map to select each element 
+            //if we use for loop Error will appear that can not define id
+            products.map(selItem=>{
+                // check if id of clicked button is same to the id of product
+                    //THEY ARE EQUAL IN VALUE NOT IN THE TYPE 
+                    if( (e.target.id) == (selItem.id) ){
+                        console.log(selItem.id)
+                        //set choosen div to local storage and u must convert it to string 
+                        localStorage.setItem("choosenItem" ,JSON.stringify(selItem))
+                    }
+            })
         }else{
             //if user is not log in 
             //redirect to register page

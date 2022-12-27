@@ -1,5 +1,52 @@
 
+header{
+    background-color: #333;  
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+.header-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.header-section .logo{
+    color: #fff;
+    text-decoration: none;
+    font-size: 30px;
+}
+.header-section  nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.header-section  nav ul li{
+    margin-left:10px ;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+.header-section  nav ul li a{
+    color: #fff;
+    text-decoration: none ;
+   font-size: 20px;
+   
+}
+li #cart-icon{
+  
+    cursor: pointer;
+}
 
+#cart-icon{
+    color: #fff;
+    font-size: 20px;
+    align-self: center;
+    
+}
+
+/* ------------------------------------- */
 .login .login-content{
     background-color: 	#3b5998;
     width: 800px;
