@@ -17,7 +17,6 @@ if(userName){
     //inter the name from local storage to user li a
     userNameDom.innerHTML = userName
 
-
 }
 
 //when click on  log out 
@@ -72,8 +71,12 @@ let addToCartBtn = document.querySelectorAll(".home-content .boxes .box .actions
 let boxDom = document.querySelectorAll(".home-content .boxes .box")
 //hold the badge span
 let badge = document.querySelector(".header-section nav .user-in li .badge")
+//get the value of badge from local storage or set "0" if there is no products
+badge.innerHTML = localStorage.getItem("badgeNum") || 0
+//catch div that hold header of product selected in cart menue
+menueItems = document.querySelector(".menue-items")
 
-
+let x = []
 addToCartBtn.forEach((btn)=>{
     btn.addEventListener('click',function(e){
         //check if user is login
@@ -89,11 +92,34 @@ addToCartBtn.forEach((btn)=>{
                 // check if id of clicked button is same to the id of product
                     //THEY ARE EQUAL IN VALUE NOT IN THE TYPE 
                     if( (e.target.id) == (selItem.id) ){
-                        console.log(selItem.id)
+                        //empty the array to not repeate the selected products each time 
+                        x = []
+                        //push every element selected to array and set it to local storage
+                        //note : x is array of objects selected so we should use map on it
+                        x.push(selItem)
+                        
                         //set choosen div to local storage and u must convert it to string 
-                        localStorage.setItem("choosenItem" ,JSON.stringify(selItem))
+                        // localStorage.setItem("choosenItem" ,JSON.stringify(selItem))
+                        localStorage.setItem("choosenItem" ,JSON.stringify(x))
+                        
                     }
             })
+
+
+
+// ------------------------------------------------------------------------
+
+
+
+
+            // console.log(localStorage.getItem("choosenItem"))
+        JSON.parse( localStorage.getItem("choosenItem")).map(pro =>{
+            menueItems.innerHTML += `<p>${pro.header}</p>`
+        
+        })
+
+//   -----------------------------------------------------------------------
+
         }else{
             //if user is not log in 
             //redirect to register page
@@ -101,8 +127,51 @@ addToCartBtn.forEach((btn)=>{
         }
     })
     
+
+})
+
+//catch the cart menue div
+let cartMenue = document.querySelector(".header-section .cart-menue")
+let cartCell = document.querySelector(".user-in .cart-cell")
+
+//display cart menue when click on cart cell
+cartCell.addEventListener('click' , function(e){
+    //this is must 
+    e.stopPropagation() 
+    //toggle class to display or not according to cart menue
+    cartMenue.classList.toggle("ok")
+
+    //check if there is product selected 
+    if(   localStorage.getItem("badgeNum")   == 0){
+        //if no show this button name
+        viewaProductBtn.innerHTML = "No Products"
+    }else{
+        //if yes show this button name
+        viewaProductBtn.innerHTML = "Viewa All Products"
+    }
+
+})
+
+//to click any where outside the cart cell or cart menue
+document.addEventListener('click',e=>{
+    if(e.target !== cartMenue  ){
+        cartMenue.classList.remove("ok")
+    }
 })
 
 
+let viewaProductBtn = document.querySelector(".view-products")
+
+if(userName){
+    //action on the button on cart menue if there is product selected or not
+    viewaProductBtn.addEventListener('click', function(e){
+        e.preventDefault()
+        //if there i sproduct selected then redirect to cart page
+        if(   localStorage.getItem("badgeNum") != 0){
+            window.location = "cart.html"  
+        }
+       
+    })
+}
 
 
